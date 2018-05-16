@@ -2,6 +2,7 @@
 
 import Navigator from "./Navigator";
 import Ajax from "./Ajax";
+import AvatarLoader from "./AvatarLoader";
 
 export default class AuthManager {
     constructor() {
@@ -30,6 +31,7 @@ export default class AuthManager {
                     localStorage.setItem("PASSWORD", password);
                     document.getElementById("menu_box_login_label").innerHTML = "Пользователь: " + localStorage.getItem("LOGIN");
                     Navigator.showBox("menu_box");
+                    AvatarLoader.loadAvatar();
                 }
             });
         };
