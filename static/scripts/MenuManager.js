@@ -37,7 +37,9 @@ export default class MenuManager {
         const imageStr = document.getElementById("menu_box_avatar_image").src;
         const id = parseInt(localStorage.getItem("ID"));
 
-        Ajax.postFile("api/avatars/upload", "file=" + imageStr, (xhr) => {
+        Ajax.post("api/avatars/upload", JSON.stringify({
+            image: imageStr,
+        }),(xhr) => {
 
         });
     }
