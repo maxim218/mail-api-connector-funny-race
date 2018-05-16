@@ -1,11 +1,13 @@
 "use strict";
 
 import Ajax from "./Ajax";
+import MultiplayerControl from "./MultiplayerControl";
 
 export default class MenuManager {
     constructor() {
         MenuManager.addLogoutEvent();
         MenuManager.addAvatarEvent();
+        MenuManager.startMultiplayerMode();
     }
 
     static addLogoutEvent() {
@@ -31,6 +33,12 @@ export default class MenuManager {
                 document.getElementById("menu_box_avatar_image").src = e.target.result;
             }
         };
+    }
+
+    static startMultiplayerMode() {
+        document.getElementById("menu_box_multiplayer_btn").onclick = function() {
+            new MultiplayerControl();
+        }
     }
 
     static sendAvatar() {

@@ -4,6 +4,7 @@ const boxes = [
     "auth_box",
     "registrate_box",
     "menu_box",
+    "two_players_box",
 ];
 
 export default class Navigator {
