@@ -18,6 +18,32 @@ export default class MultiplayerControl {
         this.startSocket();
         this.startSendingPing();
 
+        document.getElementById("two_players_box_Bot_btn").onclick = () => {
+            document.getElementById("two_players_box_BOT_LABEL").innerHTML = "BOT ROBOT PLAYER";
+            document.getElementById("two_players_box_Bot_btn").hidden = true;
+            let inter = setInterval(() => {
+                const r = parseInt(Math.random() * 10000) % 4;
+                console.log("RRR: " + r);
+                if(r === 0) {
+                    try {
+                        this.socket.send(JSON.stringify({
+                            class: "GameAction",
+                            action: "UP",
+                        }));
+                    } catch (err) {}
+                }
+
+                if(r === 1) {
+                    try {
+                        this.socket.send(JSON.stringify({
+                            class: "GameAction",
+                            action: "DOWN",
+                        }));
+                    } catch (err) {}
+                }
+            }, 700);
+        };
+
         this.keysControlManager.initCallbacks(() => {
             try {
                 this.socket.send(JSON.stringify({
@@ -39,6 +65,19 @@ export default class MultiplayerControl {
         console.log("Получено сообщение: " + event.data);
         const messageObj = JSON.parse(event.data.toString());
         const classValue = messageObj.class;
+
+        // is won
+        if(classValue === "FinishGameMessage") {
+            if(messageObj.won === true) {
+                this.socket.close();
+                alert("Вы победили. ПОБЕДА.");
+                location.reload();
+            } else {
+                this.socket.close();
+                alert("Вы проиграли. ПОРАЖЕНИЕ.");
+                location.reload();
+            }
+        }
 
         // start game
         if(classValue === "InitGameMessage") {
